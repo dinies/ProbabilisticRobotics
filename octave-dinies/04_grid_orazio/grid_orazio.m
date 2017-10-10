@@ -14,7 +14,7 @@ global map = getMap(argv(){1});
 
 #initialize actual robot position x,y (not a state visible to the robot)
 #possible orientations {  up [1], right [2], down [3], left [4]}
-global state_ground_truth = [rows(map)-2, 4, 1];
+global state_ground_truth = [rows(map)-1, 2, 2];
 
 #initialize robot states: position and orientaion belief values over the complete grid
 number_of_free_cells = rows(map)*columns(map);

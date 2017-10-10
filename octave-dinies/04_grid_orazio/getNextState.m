@@ -33,7 +33,6 @@ function state_ground_truth = getNextState(map_, state_ground_truth_, control_in
   for (row = min_row:max_row)
 	  for (col = min_col:max_col)
       for ( ori = possible_ori)
-        cumulative_probability
 		    cumulative_probability += transition_probability(row, col, ori);
 		    if(cumulative_probability > minimum_probability)
 		

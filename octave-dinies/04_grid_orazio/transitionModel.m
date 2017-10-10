@@ -123,11 +123,10 @@ function transition_probability_matrix = transitionModel(map_, row_from_, col_fr
 		    invalid_motion = true;
 	    endif
 	    if (invalid_motion)
-	
 	      #if the desired translation is zero
 	      if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0)
           transition_probability_matrix(row_to, col_to, orientation) = 1; #we stay with certain probability (no motion has full confidence)
-		      continue;
+          continue;
 	      else
 	        continue; #we cannot move
 	      endif
