@@ -14,7 +14,7 @@ global map = getMap(argv(){1});
 
 #initialize actual robot position x,y (not a state visible to the robot)
 #possible orientations {  up [1], right [2], down [3], left [4]}
-global state_ground_truth = [rows(map)-1, 2, 2];
+global state_ground_truth = [rows(map)-1, 6, 2];
 
 #initialize robot states: position and orientaion belief values over the complete grid
 number_of_free_cells = rows(map)*columns(map);
@@ -64,7 +64,7 @@ function keyPressed (src_, event_)
   
   #erase previous robot position and observations
   subplot(subfigure_ground_truth);
-  drawOrientation(map , state_ground_truth(1), state_ground_truth(2), state_ground_truth(3), "white" );
+  drawOrientation(map , state_ground_truth(1), state_ground_truth(2), state_ground_truth(3), "white", "white" );
 
   drawRectangle(map, state_ground_truth(1), state_ground_truth(2), "white");
 
@@ -110,7 +110,7 @@ endfor
   subplot(subfigure_ground_truth);
   drawRectangle(map, state_ground_truth(1), state_ground_truth(2), "red");
 
-  drawOrientation(map , state_ground_truth(1), state_ground_truth(2), state_ground_truth(3), "yellow" );
+  drawOrientation(map , state_ground_truth(1), state_ground_truth(2), state_ground_truth(3), "yellow", "red" );
 
   drawObservations(map, observations, state_ground_truth(1), state_ground_truth(2));
 
@@ -155,7 +155,7 @@ drawMap(map);
 
 #draw initial robot position
 drawRectangle(map, state_ground_truth(1), state_ground_truth(2), "red");
-drawOrientation(map , state_ground_truth(1), state_ground_truth(2), state_ground_truth(3), "yellow" );
+drawOrientation(map , state_ground_truth(1), state_ground_truth(2), state_ground_truth(3), "yellow","red" );
 
 printf("map loaded!\n");
 printf("Move orazio with [W, A, S, D]\n");
