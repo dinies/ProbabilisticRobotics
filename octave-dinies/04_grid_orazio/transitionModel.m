@@ -6,7 +6,7 @@ function transition_probability_matrix = transitionModel(map_, row_from_, col_fr
   #against each other cell and itself
 	for row_to = 1:map_rows
 		for col_to = 1:map_cols
-      for orientation = 1:4
+      for ori_to = 1:4
 	
       #available robot controls (corresponding to keyboard key values)
       global MOVE_FORWARD
@@ -40,7 +40,7 @@ function transition_probability_matrix = transitionModel(map_, row_from_, col_fr
       % # 4 - 2 -> no  = 2
       % # 4 - 3 -> yes = 1
       % # 4 - 4 -> yes = 0
-      translation_orientation= orientation - orientation_;
+      translation_orientation= ori_to - orientation_;
 
 
       #allow only unit motions (1 cell): check if we have a bigger motion
@@ -125,7 +125,7 @@ function transition_probability_matrix = transitionModel(map_, row_from_, col_fr
 	    if (invalid_motion)
 	      #if the desired translation is zero
 	      if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0)
-          transition_probability_matrix(row_to, col_to, orientation) = 1; #we stay with certain probability (no motion has full confidence)
+          transition_probability_matrix(row_to, col_to, ori_to) = 1; #we stay with certain probability (no motion has full confidence)
           continue;
 	      else
 	        continue; #we cannot move
@@ -137,24 +137,24 @@ function transition_probability_matrix = transitionModel(map_, row_from_, col_fr
         case MOVE_FORWARD
           switch(orientation_)
             case 1
-              if (translation_rows     == -1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == -1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows     == -1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == -1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 3
-              if (translation_rows     == 1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows     == 1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 2
-              if (translation_rows     == 0 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to,orientation) = 0.8;
-               elseif (translation_rows == 1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to,orientation) = 0.1;
-               elseif (translation_rows == -1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to,orientation) = 0.1;
+              if (translation_rows     == 0 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to,ori_to) = 0.8;
+               elseif (translation_rows == 1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to,ori_to) = 0.1;
+               elseif (translation_rows == -1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to,ori_to) = 0.1;
               endif;
             case 4
-              if (translation_rows     == 0 && translation_cols ==  -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows     == 0 && translation_cols ==  -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             otherwise
               return;
@@ -162,74 +162,74 @@ function transition_probability_matrix = transitionModel(map_, row_from_, col_fr
         case MOVE_BACKWARD
           switch(orientation_)
             case 1
-              if (translation_rows     == 1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows     == 1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 3
-              if (translation_rows     == -1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == -1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows     == -1 && translation_cols ==  0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == -1 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 2
-              if (translation_rows     == 0 && translation_cols ==  -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows     == 0 && translation_cols ==  -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == -1 && translation_cols == -1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 4
-              if (translation_rows     == 0 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == -1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows     == 0 && translation_cols ==  1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == -1 && translation_cols == 1 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             otherwise
               return;
           endswitch	
         case ROTATE_RIGHT
-         
           switch(orientation_)
-            case 1
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -3) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+            case 1 %  target_orientation 
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 3) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;                     
             case 3
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 2
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 4
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 3) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -3) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;            otherwise
                 return;
           endswitch
-        case ROTATE_LEFT  
+        case ROTATE_LEFT 
+
           switch(orientation_)
             case 1
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -3) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 3) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;                     
             case 3
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 2
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;
             case 4
-              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == 1) transition_probability_matrix(row_to, col_to, orientation) = 0.8;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
-               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 3) transition_probability_matrix(row_to, col_to, orientation) = 0.1;
+              if (translation_rows == 0 && translation_cols == 0 && translation_orientation == -1) transition_probability_matrix(row_to, col_to, ori_to) = 0.8;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == 0) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
+               elseif (translation_rows == 0 && translation_cols == 0 && translation_orientation == -3) transition_probability_matrix(row_to, col_to, ori_to) = 0.1;
               endif;            otherwise
                 return;
           endswitch

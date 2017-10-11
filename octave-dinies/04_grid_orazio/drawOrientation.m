@@ -8,13 +8,13 @@ function drawOrientation(map_, row_, col_, ori_,color_code_)
 
     switch(ori_)
         case 1
-            rectangle("Position", [fixed_x+0.4 fixed_y+0.8  0.2 0.2], "FaceColor", color_code_);
+            rectangle("Position", [fixed_x+0.4 fixed_y+0.8  0.2 0.2], "FaceColor", color_code_, "EdgeColor", "white");
         case 2
-            rectangle("Position", [fixed_x+0.8 fixed_y+0.4  0.2 0.2], "FaceColor", color_code_);
+            rectangle("Position", [fixed_x+0.8 fixed_y+0.4  0.2 0.2], "FaceColor", color_code_, "EdgeColor", "white");
         case 3
-            rectangle("Position", [fixed_x+0.4 fixed_y  0.2 0.2], "FaceColor", color_code_);
+            rectangle("Position", [fixed_x+0.4 fixed_y  0.2 0.2], "FaceColor", color_code_, "EdgeColor", "white");
         case 4
-            rectangle("Position", [fixed_x fixed_y+0.4  0.2 0.2], "FaceColor", color_code_);
+            rectangle("Position", [fixed_x fixed_y+0.4  0.2 0.2], "FaceColor", color_code_, "EdgeColor", "white");
         otherwise
         return;
     endswitch

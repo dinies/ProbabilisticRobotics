@@ -64,7 +64,10 @@ function keyPressed (src_, event_)
   
   #erase previous robot position and observations
   subplot(subfigure_ground_truth);
+  drawOrientation(map , state_ground_truth(1), state_ground_truth(2), state_ground_truth(3), "white" );
+
   drawRectangle(map, state_ground_truth(1), state_ground_truth(2), "white");
+
   clearObservations(observations, state_ground_truth(1), state_ground_truth(2), map);
   
 #---------------------------------- FILTERING ----------------------------------
