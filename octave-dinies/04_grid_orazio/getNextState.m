@@ -1,8 +1,6 @@
 function state_ground_truth = getNextState(map_, state_ground_truth_, control_input_)
   state_ground_truth = state_ground_truth_;
 
-  % dbstop getNextState 36
-
   #sampling setup
   minimum_probability    = unifrnd(0, 1);
   cumulative_probability = 0;
