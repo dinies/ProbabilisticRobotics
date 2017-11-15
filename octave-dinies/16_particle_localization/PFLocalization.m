@@ -14,7 +14,7 @@ addpath "./exercise" % uncomment this line to target the exercise
 [landmarks, poses, transitions, observations] = loadG2o('datasets/dataset_point.g2o');
 
 % how many sample we want to deal with
-dim_samples = 2000;
+dim_samples = 800;
 
 % map dimensions specified to sample the initial particles
 map_min = -12;
@@ -26,7 +26,7 @@ samples = sampleFromFreeSpace(map_min, map_max, dim_samples);
 weights = ones(1,dim_samples);
 
 % keep track of the best particle (with highest weight) to visualize it
-best_particle_id = 0;
+best_particle_id = 18;
 
 % simulation cycle
 for i=1:length(transitions)
