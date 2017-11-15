@@ -14,7 +14,7 @@ addpath "./exercise" % uncomment this line to target the exercise
 [landmarks, poses, transitions, observations] = loadG2o('datasets/dataset_point.g2o');
 
 % how many sample we want to deal with
-dim_samples = 20;
+dim_samples = 2000;
 
 % map dimensions specified to sample the initial particles
 map_min = -12;
