@@ -15,10 +15,12 @@ tf::TransformListener* listener=0;
 Localizer localizer;
 Eigen::Vector3f old_pose;
 bool restarted = true;
-std::string laser_topic = "/base_scan";
+std::string laser_topic = "/scan";
+std::string base_frame = "/base_frame";
+std::string odom_frame = "/odom";
 double cumulative_time = 0;
 int counter = 0;
-float forced_max_range = 10;
+float forced_max_range = 15;
 float squared_endpoint_distance = 0.1*0.1;
 bool show_distance_map=false;
 
@@ -40,21 +42,21 @@ void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
   //std::string frame_id = msg->header.frame_id;
   ros::Time t = msg->header.stamp;
   std::string error;
-  if (! listener->waitForTransform ("/odom", "/base_link", t, ros::Duration(0.5), ros::Duration(0.5), &error)) {
+  if (! listener->waitForTransform (odom_frame, base_frame, t, ros::Duration(0.5), ros::Duration(0.5), &error)) {
     cerr << "error: " << error << endl;
     return;
   }
   tf::StampedTransform robot_pose_t;
-  listener->lookupTransform("/odom", "/base_link", t, robot_pose_t);
+  listener->lookupTransform(odom_frame, base_frame, t, robot_pose_t);
   Eigen::Vector3f robot_pose = convertPose(robot_pose_t);
    
-  if (! listener->waitForTransform ("/base_link", msg->header.frame_id, t, ros::Duration(0.5), ros::Duration(0.01), &error)) {
+  if (! listener->waitForTransform (base_frame, msg->header.frame_id, t, ros::Duration(0.5), ros::Duration(0.01), &error)) {
     cerr << "error: " << error << endl;
     return;
   }
   double t0=getTime();
   tf::StampedTransform laser_pose_t;
-  listener->lookupTransform("/base_link", msg->header.frame_id, t, laser_pose_t);
+  listener->lookupTransform(base_frame, msg->header.frame_id, t, laser_pose_t);
   Eigen::Vector3f laser_pose = convertPose(laser_pose_t);
 
   if (! restarted) {
@@ -133,13 +135,25 @@ void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 
 int main(int argc, char **argv){
   UnsignedCharImage img = cv::imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
+  cv::namedWindow( "localizer", 0 );
+
   localizer.setMap(img, 0.05, 10, 230);
   localizer.init(5000, 3, 0.2, 300);
   localizer.startGlobal();
+  std::cerr << "Starting node. " << std::endl; 
   ros::init(argc, argv, "thin_localizer_node");
-  ros::NodeHandle n;
+  ros::NodeHandle n, private_nh("~");
+
+  private_nh.param<std::string>("laser_topic", laser_topic, "/scan");
+  private_nh.param<std::string>("base_frame", base_frame, "/base_frame");
+  private_nh.param<std::string>("odom_frame", odom_frame, "/odom");
+  std::cerr << "Using params: " << std::endl;
+  std::cerr << "_laser_topic:=    " << laser_topic << std::endl;
+  std::cerr << "_base_frame:=     " << base_frame << std::endl;
+  std::cerr << "_odom_frame:=     " << odom_frame << std::endl;
+  
   listener = new tf::TransformListener;
-  ros::Subscriber sub = n.subscribe(laser_topic, 100, laserCallback);
+  ros::Subscriber sub = n.subscribe(laser_topic, 100, laserCallback);  
   ros::spin();
 
   return 0;

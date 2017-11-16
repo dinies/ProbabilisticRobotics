@@ -224,7 +224,7 @@ namespace thin_localizer {
       cvtColor(_distance_map_image, img, CV_GRAY2BGR);
     else
       cvtColor(_map, img, CV_GRAY2BGR);
-   float ires=1./_resolution;
+    float ires=1./_resolution;
     int count=0;
     for (size_t i=0; i<_particles.size(); i++){
       int r = _particles[i]._pose.x()*ires;
@@ -244,7 +244,10 @@ namespace thin_localizer {
       int c = ep.y()*ires;
       if (r<0||r>=img.rows||c<0||c>=img.cols)
 	continue;
-      img.at<cv::Vec3b>(r,c)=cv::Vec3b(255,0,0);
+      cv::Scalar color(255,0,0);
+      cv::circle(img, cv::Point(c,r), 2, color);
+
+      //      img.at<cv::Vec3b>(r,c)=cv::Vec3b(255,0,0);
     }
   }
 
