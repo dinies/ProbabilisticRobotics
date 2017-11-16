@@ -26,7 +26,7 @@ samples = sampleFromFreeSpace(map_min, map_max, dim_samples);
 weights = ones(1,dim_samples);
 
 % keep track of the best particle (with highest weight) to visualize it
-best_particle_id = 18;
+best_particle_id = 0;
 
 % simulation cycle
 for i=1:length(transitions)
