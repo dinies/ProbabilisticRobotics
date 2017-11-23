@@ -36,12 +36,10 @@ for i=1:length(transitions)
 	% predict
         samples = prediction(samples, transitions(i));
 %printf("prediction time: %f\n", cputime - t);
-        
 %t = cputime;
 	% plot the state
         plotStatePF(samples, weights, landmarks, best_particle_id, gt_pose);
 %printf("plotting time: %f\n", cputime - t);
-        
 %t = cputime;
 	% update the weights
         weights = update(samples, weights, landmarks, observations(i));
