@@ -9,12 +9,10 @@
 function samples = prediction(samples, transition)
 
 	dim_particles = size(samples,2);
-	
 	u = transition.v;
         %it returns u = [ux, uy, utheta]. simply not consider uy
 	u_x = u(1);
 	u_theta = u(3);
-	
 	a1 = abs(u_x);
 	a2 = abs(u_theta);
 	%apply transition to every particle
@@ -22,8 +20,7 @@ function samples = prediction(samples, transition)
 		%sample noise here and apply
 		noise_x = (rand() - 0.5)*a1;
 		noise_theta = (rand() - 0.5)*a2;
-	  
-    u_noise = [ a1 + noise_x , 0 , a2 + noise_theta ];
+    u_noise = [ u(1) + noise_x , 0 , u(3) + noise_theta ];
 		samples(:,i) = motion_model( samples(:,i), u_noise );
 	end
 endfunction
