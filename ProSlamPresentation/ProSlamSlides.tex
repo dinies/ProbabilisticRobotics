@@ -1,5 +1,168 @@
-\documentclass{beamer} \title {A first example} \author{author} \date{\today}
+\documentclass[16pt]{beamer}
+
+
+
+\title {A first example}
+\author{author}
+\date{\today}
 \begin{document}
-\frame{\titlepage} \begin{frame} \frametitle{First Slide}
-Contents of first slide \end{frame}
+\frame{\titlepage}
+
+\begin{frame}
+   \frametitle{Outline}
+      \tableofcontents
+\end{frame}
+
+\section{ Introduction }
+
+\subsection*{General Topic}
+\begin{frame}
+  \frametitle{What is SLAM ? }
+  SLAM stands for ...
+\end{frame}
+
+
+\subsection{Problem }
+\begin{frame}
+  \frametitle{Problem }
+  \begin{itemize}
+  \item Computational Heavyness
+  \item High Theoretical Complexity
+  \item How to pratically do it ?
+  \end{itemize}
+\end{frame}
+
+\subsection{Proposed solution}
+\begin{frame}
+  \frametitle{Proposed solution }
+ \textbf{ ProSlam: } \\
+ \begin{itemize}
+ \item light
+ \item simple
+ \item clear
+ \end{itemize}
+ 
+\end{frame}
+
+\section{ Big Picture}
+
+\subsection{Related work}
+\subsubsection*{Story}
+\begin{frame}
+  \frametitle{Story}
+  \begin{itemize}
+  \item LSD SLAM
+  \item etc
+  \end{itemize}
+
+\end{frame}
+\subsubsection*{State of the art }
+\begin{frame}
+  \frametitle{State of the art}
+  \begin{itemize}
+  \item ORB SLAM 2
+  \item etc
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Main contribution}
+\begin{frame}
+  \frametitle{Main contribution}
+  \textbf{ ProSlam: } \\
+  \begin{itemize}
+  \item open source cpp implementation
+  \item easy to use for beginners...
+  \item computationally light
+  \item good performances
+  \end{itemize}
+\end{frame}
+
+
+\section{ Methods }
+\subsection*{SLAM Map}
+\begin{frame}
+  \frametitle{SLAM Map}
+
+  location based graph ...
+  \textbf{ Loop: } \\
+  \begin{itemize}
+  \item Relocation
+  \item Adjustment
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Pipeline}
+\begin{frame}
+  \frametitle{Pipeline}
+  \textbf{ Core Modules: } \\
+  \begin{itemize}
+  \item Triangulation
+  \item Incremental Motion Estimation
+  \item Map Management 
+  \item Relocation
+  \end{itemize}
+
+\end{frame}
+
+\subsubsection*{Triangulation}
+\begin{frame}
+  \frametitle{Triangulation}
+  ....
+\end{frame}
+
+\subsubsection*{Incremental Motion Estimation}
+\begin{frame}
+  \frametitle{Incremental Motion Estimation}
+  ....
+\end{frame}
+
+
+\subsubsection*{Map Management}
+\begin{frame}
+  \frametitle{Map Management}
+  ....
+\end{frame}
+
+
+\subsubsection*{Relocation}
+\begin{frame}
+  \frametitle{Relocation}
+  ....
+\end{frame}
+
+
+\subsection{Data Structs}
+\begin{frame}
+  \frametitle{Data Stucts }
+  \begin{itemize}
+  \item KeyPoint
+  \item FramePoint
+  \item Frame
+  \item LandMark
+  \item LocalMap
+  \item GlobalMap
+  \end{itemize}
+\end{frame}
+
+
+\section{ Results }
+\begin{frame}
+  \frametitle{Results}
+  ...
+  images of plots and performances .. benchmarks
+\end{frame}
+
+\section{ Conclusion}
+\begin{frame}
+  \frametitle{Conclusion}
+  \textbf{ In the end: } \\
+  \begin{itemize}
+  \item summmarizing implications of the results
+  \item connect results with provided claims
+  \item take home message
+  \end{itemize}
+\end{frame}
+
 \end{document}
