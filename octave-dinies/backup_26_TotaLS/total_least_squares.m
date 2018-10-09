@@ -55,7 +55,7 @@ endfunction;
 #   chi_stats_{l,p,r}: array 1:num_iterations, containing evolution of chi2 for landmarks, projections and poses
 #   num_inliers{l,p,r}: array 1:num_iterations, containing evolution of inliers landmarks, projections and poses
 
-function [XR, XL, chi_stats_l, num_inliers_l, chi_stats_p, num_inliers_p,chi_stats_r, num_inliers_r, H, b] = doTotalLS(XR, XL,
+function [XR, XL, chi_stats_l, num_inliers_l, chi_stats_p, num_inliers_p,chi_stats_r, num_inliers_r] = doTotalLS(XR, XL,
 	     Zl, landmark_associations,
 	     Zp, projection_associations,
 	     Zr, pose_associations,
@@ -112,7 +112,5 @@ function [XR, XL, chi_stats_l, num_inliers_l, chi_stats_p, num_inliers_p,chi_sta
 
     dx(pose_dim+1:end)=-(H(pose_dim+1:end,pose_dim+1:end)\b(pose_dim+1:end,1));
     [XR, XL]=boxPlus(XR,XL,num_poses, num_landmarks, dx);
-
-
   endfor
 endfunction
