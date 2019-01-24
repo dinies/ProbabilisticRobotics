@@ -20,7 +20,7 @@ function [mu, sigma] = correction_bearing_only(mu, sigma, landmarks, observation
   num_landmarks_seen = length(observations.observation);
   
   % dimension of the state in dim, in our case is fixed to 3
-  state_dim = size(mu,1);	
+  state_dim = size(mu,1);
 
   %if I've seen no landmarks, i do nothing
   if (num_landmarks_seen==0)
@@ -55,13 +55,21 @@ function [mu, sigma] = correction_bearing_only(mu, sigma, landmarks, observation
     ly = current_land.y_pose;
 
     %where I should see that landmark
-    % t= %TODO;
-    % bearing_prediction = %TODO;
+    t= [mu_x; mu_y] ;
+    p = Rt* ( [lx; ly] - t );
+
+    bearing_prediction = atan2( p(2), p(1));
 
     h_t(end+1,:) = bearing_prediction;
 
     %compute its Jacobian
-    %C = [%TODO ];
+    delta_x =[lx; ly] - t;
+    common_term = 1/ (p(1)^2 + p(2)^2);
+    pd = [-p(2) p(1)];
+    jacPart = [ -Rt , Rtp*delta_x ];
+    C = [ 
+    common_term * pd * jacPart
+    ];
 
     C_t(end+1,:) = C;
 
@@ -69,15 +77,15 @@ function [mu, sigma] = correction_bearing_only(mu, sigma, landmarks, observation
 
   %observation noise
   noise = 0.01;
-  %sigma_z = %TODO;
+  sigma_z = eye(num_landmarks_seen) * noise ;
 
   %Kalman gain
-  %K = %TODO;
+  K = sigma* C_t'*(inv(sigma_z + C_t *sigma*C_t'));
 
   %update mu
-  %mu = %TODO;
+  mu = mu + K*( z_t - h_t);
 
   %update sigma
-  %sigma = %TODO;
+  sigma = ( eye( state_dim ) - K*C_t) * sigma;
 
 end

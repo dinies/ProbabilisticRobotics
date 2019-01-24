@@ -77,20 +77,25 @@ function [mu, sigma, id_to_state_map, state_to_id_map] = correction(mu, sigma, o
       landmark_position = mu(id_state:id_state+1,:);
 
       #where I predict i will see that landmark 
-      delta_t            = #TODO: relative landmark position
-      measure_prediction = #TODO: landmark position in robot
+      l = [ landmark_position(1); landmark_position(2) ];
+      t = [ mu_t(1); mu_t(2)];
+      delta_t  =  l - t;
+      measure_prediction = Rt* delta_t;
 
       #add landmark measurement prediction
       h_t(end+1,:) = measure_prediction(1);
       h_t(end+1,:) = measure_prediction(2);
 
       #jacobian piece w.r.t. robot: dh/dx(R,t)
-      C_m          = zeros( #TODO: set dimensions
-      C_m(1:2,1:2) = #TODO: translation derivative dh(R,t)/dt
-      C_m(1:2,3)   = #TODO: rotation derivative dh(R,t)/dR
+      C_m          = zeros( 2 , dimension_mu );#TODO: set dimensions
+      C_m(1:2,1:2) = -Rt;
+      C_m(1:2,3)   = Rtp*delta_t;
 
       #jacobian piece w.r.t. landmark: dh/dx(n)
-      C_m(:,id_state:id_state+1) = #TODO: relative landmark measurement derivative
+      C_m(:,id_state:id_state+1) = [
+      1 0
+      0 1
+      ];
 
       #add jacobian piece to main jacobian
       C_t(end+1,:) = C_m(1,:);
@@ -108,7 +113,7 @@ function [mu, sigma, id_to_state_map, state_to_id_map] = correction(mu, sigma, o
 
     #observation noise
     noise   = 0.01;
-    sigma_z = noise*eye( #TODO: set landmark noise dimensions
+    sigma_z = noise*eye(number_of_known_landmarks*2);
 
     #Kalman gain
     K = sigma * C_t'*(inv(C_t*sigma*C_t' + sigma_z));
@@ -118,7 +123,7 @@ function [mu, sigma, id_to_state_map, state_to_id_map] = correction(mu, sigma, o
     mu         = mu + K*innovation;
 
     #update sigma
-    sigma = (eye(#TODO: set full state covariance dimension and complete covariance correction
+    sigma = (eye(dimension_mu) - K*C_t)*sigma;
   endif
 endfunction
 

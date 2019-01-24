@@ -41,16 +41,28 @@ function [mu, sigma] = prediction(mu, sigma, control_input)
   #readability: current control input
   u_x     = u(1); #translational velocity
   u_theta = u(3); #rotational velocity
+  s = sin(mu_theta);
+  c = cos(mu_theta);
+
 
   #Jacobian A: df(x, u)/dx
   #initialize A as an identity and fill only the robot block
-  A = eye( #TODO: set full state/state dimensions
-  A(1:3,1:3) = #TODO: set portion that is affected by transition function
+  A = eye( dimension_mu ); #TODO: set full state/state dimensions
+  A(1:3,1:3) = [
+  1 0 -s*u_x
+  0 1 c*u_x
+  0 0 1
+  ];
 
   #Jacobian B: df(x, u)/du
   #for each state variable we have to associate the available control inputs
-  B = zeros( #TODO: set full control/state dimensions
-  B(1:3,:) = #TODO: set portion that is affected by transition function
+  B = zeros(dimension_mu, 2); #TODO: set full control/state dimensions
+  B(1:3,:) =[
+  c 0
+  s 0
+  0 1
+  ];
+
 
   #control noise u: standard deviations
   sigma_u = 0.1;     #constant part
@@ -58,9 +70,12 @@ function [mu, sigma] = prediction(mu, sigma, control_input)
   sigma_R = u_theta; #rotational velocity dependent part
 
   #compose control noise covariance sigma_u
-  sigma_u = #TODO: set noise covariance
+  sigma_u *= [
+  sigma_T 0 
+  0 sigma_R
+  ];
 
   #predict sigma
-  sigma = #TODO: set full state sigma (consisting of state and control variables)
+  sigma = A*sigma*A' + B*sigma_u*B'; #TODO: set full state sigma (consisting of state and control variables)
 endfunction
 

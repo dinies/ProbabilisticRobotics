@@ -34,20 +34,30 @@ function [mu, sigma] = prediction_bearing_only(mu, sigma, transition)
 	c = cos(mu_theta);
 
 	%Jacobian A
-	% A = [%TODO];
+	A = [
+        1 0 -s*u_x
+        0 1 c*u_x
+        0 0 1
+        ];
 
 
 	%Jacobian B
-	%B = [%TODO];
+	B = [
+        c 0
+        s 0
+        0 1
+        ];
 
 	%motion noise
 	noise = 0.1; 			%constant part	
 	v_noise = u_x^2;	 	%lin vel dependent part
 	w_noise = u_theta^2;		%ang vel dependent part
 
-	%sigma_u = [%TODO];
+	sigma_u = [
+        v_noise+noise 0
+        0 w_noise+noise
+        ];
 
 	%predict sigma
-	%sigma = %TODO;
-
+	sigma = A*sigma*A'+ B*sigma_u*B';
 end

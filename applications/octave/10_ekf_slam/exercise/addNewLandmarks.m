@@ -45,14 +45,15 @@ function [mu, sigma, id_to_state_map, state_to_id_map] = addNewLandmarks(mu, sig
       n++;
 
       #adjust direct and reverse id mappings
-      id_to_state_map(id_landmark) = #TODO: set landmark position in state
-      state_to_id_map(n)           = #TODO: set landmark identifier
+      id_to_state_map(id_landmark) = n;
+      state_to_id_map(n)           = id_landmark;
       
       #retrieve from the index the position of the landmark block in the state
       id_state = 4+2*(n-1);
 
       #compute landmark position in the world
-      landmark_position_in_world = #TODO: set position in world, recall: z(n)=Rt*(landmark_position_in_world-t)
+      landmark_position_in_world =R* [measurement.x_pose ; measurement.y_pose] +mu_t;
+      % TOdO: set position in world, recall: z(n)=Rt*(landmark_position_in_world-t)
  
       #adding the landmark state to the full state
       mu(id_state:id_state+1,1) = landmark_position_in_world;
@@ -61,7 +62,7 @@ function [mu, sigma, id_to_state_map, state_to_id_map] = addNewLandmarks(mu, sig
       #for simplicity we put a high value only in the diagonal.
       #A more deeper analysis on the initial noise should be made.
       initial_landmark_noise = 2;
-      sigma_landmark         = initial_landmark_noise*eye( #TODO: set landmark state covariance dimensions
+      sigma_landmark         = initial_landmark_noise*eye(2); #TODO: set landmark state covariance dimensions
 
       #adding the landmark covariance to the full covariance
       sigma(id_state,:)   = 0;

@@ -8,8 +8,8 @@ addpath "../tools/g2o_wrapper"
 addpath "../tools/visualization"
 source "../tools/utilities/geometry_helpers_2d.m"
 
-#addpath "./exercise" #uncomment this line to target the exercise
-addpath "./solution" #comment this line to target the exercise
+addpath "./exercise" #uncomment this line to target the exercise
+%addpath "./solution" #comment this line to target the exercise
 
 #load your own dataset dataset, without landmarks (first entry remains empty)
 [_, poses, transitions, observations] = loadG2o("../datasets/dataset_point.g2o");
